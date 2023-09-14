@@ -14,6 +14,7 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import Sorter from "sap/ui/model/Sorter";
 import Filter from "sap/ui/model/Filter";
 import FilterOperator from "sap/ui/model/FilterOperator";
+import Row from "sap/ui/table/Row";
 
 /**
  * @namespace com.tutorial.banktransfer.controller
@@ -114,8 +115,7 @@ export default class Main extends BaseController {
 	}
 	async onAttachmentDeletePress(oEvent: Event) {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		const sPath = (oEvent.getParameter("row" as never) as any).oBindingContexts
-			.bankTransferList.sPath as string;
+		const sPath = (oEvent.getParameter("row" as never) as Row).getBindingContext("bankTransferList").getPath();
 
 		const oPath = this.getView()
 			.getModel("bankTransferList")
