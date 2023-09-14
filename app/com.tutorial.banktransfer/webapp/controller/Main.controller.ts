@@ -74,10 +74,13 @@ export default class Main extends BaseController {
 	handleDialogCancelButton() {
 		this.oNewBankTransferDialog.destroy();
 	}
-	async handleDialogAddButton() {
-		const oModelData = (
+	getModelNewBankTransfer(): NewbankTransfer {
+		return (
 			this.getModel("newBankTransfer") as JSONModel
 		).getData() as NewbankTransfer;
+	}
+	async handleDialogAddButton() {
+		const oModelData = this.getModelNewBankTransfer();
 
 		const modelValidate = await validateStateAppointment(
 			oModelData as object,
