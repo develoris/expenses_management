@@ -1,0 +1,17 @@
+{
+  "generator-ui5-ts-app": {
+    "namespace": "com.tutorial.banktransfer",
+    "framework": "SAPUI5",
+    "frameworkVersion": "1.118.0",
+    "author": "Loris Beltramo",
+    "initrepo": false,
+    "tstypes": "@sapui5/types",
+    "tstypesVersion": "1.118.0",
+    "appId": "com.tutorial.banktransfer",
+    "appURI": "com/tutorial/banktransfer",
+    "cdnDomain": "ui5.sap.com",
+    "defaultTheme": "sap_horizon",
+    "gte11150": true,
+    "setupCompleted": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "verbose": true,
+    "ignore": [
+        "*.test.js"
+    ],
+    "watch": [
+        "srv"
+    ],
+    "ext": "ts",
+    "delay": 2000
+}

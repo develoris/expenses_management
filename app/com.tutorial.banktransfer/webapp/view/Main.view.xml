@@ -1,0 +1,74 @@
+<mvc:View controllerName="com.tutorial.banktransfer.controller.Main" displayBlock="true"
+	xmlns="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core"
+	xmlns:m="sap.m" height="100%" width="100%" core:require="{
+		formatter: 'com/tutorial/banktransfer/model/formatter'
+	}">
+	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+		<m:content>
+			<Table rows="{bankTransferList>/}" rowActionCount="1" selectionMode="MultiToggle" visibleRowCount="4" paste="onPaste" ariaLabelledBy="title">
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Products"/>
+						<m:ToolbarSpacer/>
+						<m:Button icon="sap-icon://add" press="handleAddBankTransfer"></m:Button>
+					</m:OverflowToolbar>
+				</extension>
+				<columns>
+					<Column visible="false">
+						<m:Label text="ID" />
+						<template>
+							<m:Text text="{bankTransferList>ID}" wrapping="false" />
+						</template>
+					</Column>
+					<Column>
+						<m:Label text="Period" />
+						<template>
+							<m:Text text="{bankTransferList>period}" wrapping="false" />
+						</template>
+					</Column>
+					<Column>
+						<m:Label text="Amount" />
+						<template>
+							<m:Text text="{bankTransferList>amount}" wrapping="false" />
+						</template>
+					</Column>
+					<Column>
+						<m:Label text="Notes" />
+						<template>
+							<m:Text text="{bankTransferList>note}" wrapping="false" />
+						</template>
+					</Column>
+					<Column>
+						<m:Label text="Active" />
+						<template>
+							<m:Text text="{bankTransferList>active}" wrapping="false" />
+						</template>
+					</Column>
+
+					<!-- <Column>
+						<m:Label  />
+						<template>
+							<m:Button icon="sap-icon://add" press="handleAddBankTransfer"></m:Button>
+						</template>
+					</Column> -->
+				</columns>
+				<rowActionTemplate>
+					<RowAction>
+						<items>
+							<RowActionItem type="Delete" press="onAttachmentDeletePress"></RowActionItem>
+						</items>
+					</RowAction>
+				</rowActionTemplate>
+			</Table>
+		</m:content>
+	</m:Page>
+	<!-- <MessagePage title="{i18n>appTitle}" text="{i18n>appTitle}" icon="sap-icon://accept" id="page" description="{i18n>appDescription}">
+		<buttons> <Button id="helloButton" text="{formatter: 'formatter.formatValue', path: 'i18n>btnText'}" press="sayHello" />
+		</buttons>
+	</MessagePage> -->
+
+</mvc:View>
