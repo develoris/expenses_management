@@ -9,6 +9,7 @@
 		"build": "ui5 build --clean-dest",
 		"build:opt": "ui5 build self-contained --clean-dest --all",
 		"watch:build:nodemon": "nodemon --config nodemon-ui.json --exec \" npm run build\"",
+		"watch:build:babel": "npm run clean && babel webapp --out-dir dist --source-maps inline --extensions \".ts,.js\" --watch --copy-files --config-file ./watch.babelrc.json",
 		"start": "ui5 serve --port 8080 -o index.html",
 		"start-cdn": "ui5 serve --port 8080 -o index-cdn.html",
 		"start:dist": "npm start -- --config ui5-dist.yaml",
@@ -21,6 +22,7 @@
 		"test": "npm run lint && npm run karma-ci-cov"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.22.15",
 		"@sapui5/types": "^1.118.0",
 		"@typescript-eslint/eslint-plugin": "^6.2.0",
 		"@typescript-eslint/parser": "^6.2.0",

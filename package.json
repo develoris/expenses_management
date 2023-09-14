@@ -26,7 +26,10 @@
     "watch:srv": "cds-ts watch",
     "watch:srv:nodemon": "nodemon --config nodemon-srv.json --exec \" npm run start \"",
     "watch:ui:nodemon": "npm --prefix ./app/com.tutorial.banktransfer/ run watch:build:nodemon",
-    "watch:all":"npm-run-all --parallel watch:srv:nodemon watch:ui:nodemon"
+    "watch:srv:babel": "nodemon --config nodemon-srv.json --exec \" npm run start \"",
+    "watch:ui:babel": "npm --prefix ./app/com.tutorial.banktransfer/ run watch:build:babel",
+    "watch:all":"npm-run-all --parallel watch:srv:nodemon watch:ui:nodemon",
+    "watch:all-babel":"npm-run-all --parallel watch:srv:babel watch:ui:babel"
   },
   "cds": {
     "requires": {

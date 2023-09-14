@@ -126,6 +126,7 @@ export default class Main extends BaseController {
 
 		const bankTranserContext = await bankTransferBinding.requestContexts();
 		await bankTranserContext[0].delete();
+		this._oBankTranferBinding.filter([]);
 		await this.getBankTransfer();
 	}
 }
