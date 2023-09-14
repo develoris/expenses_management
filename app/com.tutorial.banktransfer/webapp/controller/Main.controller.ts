@@ -114,7 +114,6 @@ export default class Main extends BaseController {
 		this.setModel(new JSONModel({}), "newBankTransfer");
 	}
 	async onAttachmentDeletePress(oEvent: Event) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
 		const sPath = (oEvent.getParameter("row" as never) as Row).getBindingContext("bankTransferList").getPath();
 
 		const oPath = this.getView()
