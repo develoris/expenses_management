@@ -121,7 +121,7 @@ export default class Main extends BaseController {
 			new Filter("ID", FilterOperator.EQ, oPath.ID),
 		]);
 
-		const bankTranserContext = await bankTransferBinding.requestContexts(0, 1);
+		const bankTranserContext = await bankTransferBinding.requestContexts();
 		await bankTranserContext[0].delete();
 		await this.getBankTransfer();
 	}
