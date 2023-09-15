@@ -9,7 +9,7 @@
 	}">
 	<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<m:content>
-			<Table rows="{bankTransferList>/}" rowActionCount="1" selectionMode="MultiToggle" visibleRowCount="4" paste="onPaste" ariaLabelledBy="title">
+			<Table rows="{bankTransferList>/}" rowActionCount="2" selectionMode="MultiToggle" paste="onPaste" ariaLabelledBy="title">
 				<extension>
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="title" text="Products"/>
@@ -59,7 +59,8 @@
 				<rowActionTemplate>
 					<RowAction>
 						<items>
-							<RowActionItem type="Delete" press="onAttachmentDeletePress"></RowActionItem>
+							<RowActionItem type="Delete" press="onAttachmentDeletePress" icon="sap-icon://delete"></RowActionItem>
+							<RowActionItem text="Edit" type="Custom" press="onEdit" icon="sap-icon://edit"></RowActionItem>
 						</items>
 					</RowAction>
 				</rowActionTemplate>

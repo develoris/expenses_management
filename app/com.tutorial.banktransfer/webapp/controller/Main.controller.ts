@@ -11,7 +11,6 @@ import DateFormat from "sap/ui/core/format/DateFormat";
 import Event from "sap/ui/base/Event";
 import TableRow from "sap/ui/webc/main/TableRow";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
-import Sorter from "sap/ui/model/Sorter";
 import Filter from "sap/ui/model/Filter";
 import FilterOperator from "sap/ui/model/FilterOperator";
 
@@ -43,6 +42,13 @@ export default class Main extends BaseController {
 			bankTransferList
 		);
 	}
+	openModifyAndAddDialog() {
+		(this.getModel("state") as JSONModel).setProperty(
+			"isModifyDialog",
+			"false"
+		);
+		this.openModifyAndAddDialog();
+	}
 	handleAddBankTransfer() {
 		const oView = this.getView();
 
@@ -65,14 +71,19 @@ export default class Main extends BaseController {
 				const oNewBankTransferDialog = oNewControl as Dialog;
 				oNewBankTransferDialog.open();
 				const newBankTransfer = this.getView().getModel("newBankTransfer");
+				const state = this.getView().getModel("state");
 				oNewBankTransferDialog.setModel(newBankTransfer, "newBankTransfer");
+				oNewBankTransferDialog.setModel(state, "state");
 				oNewBankTransferDialog.bindElement("newBankTransfer", newBankTransfer);
 			})
 			.catch(() => {});
 	}
-
 	handleDialogCancelButton() {
 		this.oNewBankTransferDialog.destroy();
+	}
+	handleDialogModifyButton() {
+		(this.getModel("state") as JSONModel).setProperty("isModifyDialog", "true");
+		this.openModifyAndAddDialog();
 	}
 	getModelNewBankTransfer(): NewbankTransfer {
 		return (
@@ -111,6 +122,7 @@ export default class Main extends BaseController {
 	initModel() {
 		this.setModel(new JSONModel({ bankTransferList: [] }), "bankTransferList");
 		this.setModel(new JSONModel({}), "newBankTransfer");
+		this.setModel(new JSONModel({}), "state");
 	}
 	async onAttachmentDeletePress(oEvent: Event) {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
