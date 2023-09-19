@@ -24,7 +24,12 @@ export default class Main extends BaseController {
 	_pNewBankTransfer: Promise<Control | Control[]>;
 	_oRow: TableRow;
 	_oBankTranferBinding: ODataListBinding;
+	_oEvent: Event;
 	async onInit(): Promise<void> {
+		console.log(
+			"BankTransferList",
+			await this.getOwnerComponent().services.bankTransfer.getList<BankTransfer>()
+		);
 		this.initModel();
 		const oModel = this.getOwnerComponent().getModel() as ODataModelV4;
 		this._oBankTranferBinding = oModel.bindList("/banktransfer", null, [], [], {
@@ -42,17 +47,18 @@ export default class Main extends BaseController {
 		(this.getView().getModel("bankTransferList") as JSONModel).setData(
 			bankTransferList
 		);
+		console.log("stop");
 	}
-	openModifyAndAddDialog() {
+	handleAddBankTransfer() {
 		(this.getModel("state") as JSONModel).setProperty(
-			"isModifyDialog",
+			"/isModifyDialog",
 			"false"
 		);
 		this.openModifyAndAddDialog();
 	}
-	handleAddBankTransfer() {
+	openModifyAndAddDialog() {
 		const oView = this.getView();
-
+		this.getOwnerComponent().getModel();
 		if (this._pNewBankTransferDialog === undefined) {
 			this._pNewBankTransfer = Fragment.load({
 				id: oView.getId(),
@@ -76,14 +82,30 @@ export default class Main extends BaseController {
 				oNewBankTransferDialog.setModel(newBankTransfer, "newBankTransfer");
 				oNewBankTransferDialog.setModel(state, "state");
 				oNewBankTransferDialog.bindElement("newBankTransfer", newBankTransfer);
+				oNewBankTransferDialog.bindElement("state", state);
 			})
 			.catch(() => {});
 	}
 	handleDialogCancelButton() {
 		this.oNewBankTransferDialog.destroy();
 	}
-	handleDialogModifyButton() {
-		(this.getModel("state") as JSONModel).setProperty("isModifyDialog", "true");
+	handleModifyBankTransfer(oEvent: Event) {
+		// this._oEvent = oEvent;
+		// this._oRow = oEvent.getParameter("row" as never) as TableRow;
+		// this._oRow.get
+		// const path
+		const otableRow = oEvent.getParameter("row" as never) as TableRow;
+		const sPath = otableRow.getBindingContext("bankTransferList").getPath();
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const selctedObjRow = otableRow
+			.getBindingContext("bankTransferList")
+			.getObject(sPath) as BankTransfer;
+		// (this._oRow.getBindingContext("bankTransferList").getModel() as JSONModel);
+
+		(this.getModel("state") as JSONModel).setProperty(
+			"/isModifyDialog",
+			"true"
+		);
 		this.openModifyAndAddDialog();
 	}
 	getModelNewBankTransfer(): NewbankTransfer {
@@ -116,17 +138,30 @@ export default class Main extends BaseController {
 		this.handleDialogCancelButton();
 	}
 	async createNewBankTransfer(newbankTranser: NewbankTransfer) {
+		// il nuovo vero
 		const oBankTransferContext =
 			this._oBankTranferBinding.create(newbankTranser);
 		await oBankTransferContext.created();
+
+		// l'update
+		// const oBankTransferContext2 = this._oBankTranferBinding.create(
+		// 	new JSONModel({
+		// 		ID: "85726248-cd9f-43d0-8e27-bb9aee9d5295",
+		// 		amount: 983,
+		// 		note: "questo è il bonifico di giugno",
+		// 	})
+		// );
+		// await oBankTransferContext2.created();
 	}
 	initModel() {
 		this.setModel(new JSONModel({ bankTransferList: [] }), "bankTransferList");
 		this.setModel(new JSONModel({}), "newBankTransfer");
-		this.setModel(new JSONModel({}), "state");
+		this.setModel(new JSONModel({ isModifyDialog: true }), "state");
 	}
 	async onAttachmentDeletePress(oEvent: Event) {
-		const sPath = (oEvent.getParameter("row" as never) as Row).getBindingContext("bankTransferList").getPath();
+		const sPath = (oEvent.getParameter("row" as never) as Row)
+			.getBindingContext("bankTransferList")
+			.getPath();
 
 		const oPath = this.getView()
 			.getModel("bankTransferList")
@@ -134,10 +169,28 @@ export default class Main extends BaseController {
 		const bankTransferBinding = this._oBankTranferBinding.filter([
 			new Filter("ID", FilterOperator.EQ, oPath.ID),
 		]);
-
 		const bankTranserContext = await bankTransferBinding.requestContexts();
 		await bankTranserContext[0].delete();
 		this._oBankTranferBinding.filter([]);
-		await this.getBankTransfer();
+
+		await bankTranserContext[0].setProperty(
+			bankTranserContext[0].getPath() + "/amount",
+			987
+		);
+		const groupId = (
+			bankTranserContext[0].getModel() as ODataModelV4
+		).getGroupId() as unknown as string;
+		(bankTranserContext[0].getModel() as ODataModelV4)
+			.submitBatch(groupId)
+			.then(async () => {
+				console.log("then");
+				this.getView().getModel().refresh();
+				this._oBankTranferBinding.filter([]);
+				await this.getBankTransfer();
+				console.log("then");
+			})
+			.catch(() => {
+				console.log("ciao");
+			});
 	}
 }

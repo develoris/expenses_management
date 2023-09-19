@@ -1,3 +1,9 @@
 ID;amount;note;period;active
-85726248-cd9f-43d0-8e27-bb9aee9d5290;125;"questo è il primo bonifico";2023-05-15;true
-85726248-cd9f-43d0-8e27-bb9aee9d5293;175;"questo è il secondo bonifico";2023-06-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5290;250;"questo è il bonifico di gennaio";2023-01-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5291;170;"questo è il bonifico di febbraio";2023-02-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5292;450;"questo è il bonifico di marzo";2023-03-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5293;500;"questo è il bonifico di aprile";2023-04-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5294;125;"questo è il bonifico di maggio";2023-05-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5295;135;"questo è il bonifico di giugno";2023-06-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5296;126.89;"questo è il bonifico di luglio";2023-07-15;true
+85726248-cd9f-43d0-8e27-bb9aee9d5297;473.98;"questo è il bonifico di agosto";2023-08-15;true

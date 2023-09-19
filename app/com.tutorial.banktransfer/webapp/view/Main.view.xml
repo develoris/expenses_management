@@ -60,7 +60,7 @@
 					<RowAction>
 						<items>
 							<RowActionItem type="Delete" press="onAttachmentDeletePress" icon="sap-icon://delete"></RowActionItem>
-							<RowActionItem text="Edit" type="Custom" press="onEdit" icon="sap-icon://edit"></RowActionItem>
+							<RowActionItem text="Edit" type="Custom" press="handleModifyBankTransfer" icon="sap-icon://edit"></RowActionItem>
 						</items>
 					</RowAction>
 				</rowActionTemplate>

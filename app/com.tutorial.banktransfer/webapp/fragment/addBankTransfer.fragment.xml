@@ -4,17 +4,15 @@
 	xmlns:core="sap.ui.core">
 	<Dialog id="modifyDialog" title="Title">
 		<beginButton>
-			<Button text="Edit" type="Emphasized" press="handleDialogAddButton" visible="= {state>/isModifyDialog} === true"/>
-
-			<Button text="ADD" type="Emphasized" press="handleDialogAddButton" visible="= {state>/isModifyDialog} === false"/>
+			<Button text="{= ${state>/isModifyDialog} === 'true' ? 'EDIT' : 'ADD' }" type="Emphasized" press="handleDialogAddButton"/>
 		</beginButton>
 		<endButton>
 			<Button text="Cancel" press="handleDialogCancelButton"/>
 		</endButton>
 		<l:VerticalLayout class="sapUiContentPadding" width="100%">
 			<f:SimpleForm id="appointmentCreateForm" editable="true" layout="ResponsiveGridLayout" singleContainerFullSize="false">
-				<Label text="Amount" labelFor="modifyTitle"/>
-				<Input id="modifyTitle" value="{
+				<Label text="Amount" labelFor="amount"/>
+				<Input id="amount" value="{
 					path: 'newBankTransfer>/amount',
 					type: 'sap.ui.model.type.Integer'
 					}" type="Number" required="true" valueState="{newBankTransfer>/_state/amount/valueState}" valueStateText="{newBankTransfer>/_state/amount/valueStateText}" />
@@ -26,7 +24,7 @@
 							'pattern': 'yyyy-MM-dd'
 						}
 					}" change="handleChange" required="true" class="sapUiSmallMarginBottom" valueState="{newBankTransfer>/_state/period/valueState}" valueStateText="{newBankTransfer>/_state/period/valueStateText}"/>
-				<Label text="Note" labelFor="Note"/>
+				<Label text="Note" labelFor="note"/>
 				<Input id="note" value="{newBankTransfer>/note}" required="true" valueState="{newBankTransfer>/_state/note/valueState}" valueStateText="{newBankTransfer>/_state/note/valueStateText}" />
 			</f:SimpleForm>
 		</l:VerticalLayout>

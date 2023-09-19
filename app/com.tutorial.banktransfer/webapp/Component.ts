@@ -1,6 +1,8 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import models from "./model/models";
 import Device from "sap/ui/Device";
+import BankTransferService from "./services/bankTransfer";
+import ODataModelV4 from "sap/ui/model/odata/v4/ODataModel";
 
 /**
  * @namespace com.tutorial.banktransfer
@@ -9,7 +11,12 @@ export default class Component extends UIComponent {
 	public static metadata = {
 		manifest: "json",
 	};
-
+	public services = {
+		bankTransfer: new BankTransferService(
+			this.getModel() as ODataModelV4,
+			"/banktransfer"
+		),
+	};
 	private contentDensityClass: string;
 
 	public init(): void {
@@ -46,5 +53,8 @@ export default class Component extends UIComponent {
 			}
 		}
 		return this.contentDensityClass;
+	}
+	public test() {
+		console.log("test");
 	}
 }

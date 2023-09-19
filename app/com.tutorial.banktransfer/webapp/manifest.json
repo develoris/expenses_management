@@ -64,9 +64,9 @@
 				"preload": true,
 				"settings": {
 					 "synchronizationMode": "None",
+					 "groupId": "$auto",
 					 "operationMode": "Server",
-					 "autoExpandSelect": true,
-					 "earlyRequests": true
+					 "autoExpandSelect": true
 				}
 		 },
 			"i18n": {
