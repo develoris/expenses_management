@@ -46,7 +46,8 @@
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.ui.table": {}
+				"sap.ui.table": {},
+				"sap.uxap": {}
 			}
 		},
 
@@ -91,12 +92,21 @@
 					"pattern": "",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "detail/{id}",
+					"name": "detail",
+					"target": "detail"
 				}
 			],
 			"targets": {
 				"main": {
 					"viewId": "main",
 					"viewName": "Main"
+				},
+				"detail": {
+					"viewID": "detail",
+					"viewName": "detail"
 				}
 			}
 		}

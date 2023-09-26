@@ -13,19 +13,19 @@
 			<f:SimpleForm id="appointmentCreateForm" editable="true" layout="ResponsiveGridLayout" singleContainerFullSize="false">
 				<Label text="Amount" labelFor="amount"/>
 				<Input id="amount" value="{
-					path: 'newBankTransfer>/amount',
+					path: 'modifybankTransfer>/amount',
 					type: 'sap.ui.model.type.Integer'
-					}" type="Number" required="true" valueState="{newBankTransfer>/_state/amount/valueState}" valueStateText="{newBankTransfer>/_state/amount/valueStateText}" />
+					}" type="Number" required="true" valueState="{modifybankTransfer>/_state/amount/valueState}" valueStateText="{modifybankTransfer>/_state/amount/valueStateText}" />
 				<Label text="Date of payment" labelFor="periodPayment"/>
 				<DatePicker id="periodPayment" value="{
-						'path':'newBankTransfer>/period',
+						'path':'modifybankTransfer>/period',
 						'type':'sap.ui.model.type.Date',
 						'formatOptions': {
 							'pattern': 'yyyy-MM-dd'
 						}
-					}" change="handleChange" required="true" class="sapUiSmallMarginBottom" valueState="{newBankTransfer>/_state/period/valueState}" valueStateText="{newBankTransfer>/_state/period/valueStateText}"/>
+					}" change="handleChange" required="true" class="sapUiSmallMarginBottom" valueState="{modifybankTransfer>/_state/period/valueState}" valueStateText="{modifybankTransfer>/_state/period/valueStateText}"/>
 				<Label text="Note" labelFor="note"/>
-				<Input id="note" value="{newBankTransfer>/note}" required="true" valueState="{newBankTransfer>/_state/note/valueState}" valueStateText="{newBankTransfer>/_state/note/valueStateText}" />
+				<Input id="note" value="{modifybankTransfer>/note}" required="true" valueState="{modifybankTransfer>/_state/note/valueState}" valueStateText="{modifybankTransfer>/_state/note/valueStateText}" />
 			</f:SimpleForm>
 		</l:VerticalLayout>
 

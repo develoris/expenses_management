@@ -1,0 +1,61 @@
+<mvc:View controllerName="com.tutorial.banktransfer.controller.Detail" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:ui="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:uxap="sap.uxap"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+	<uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false" headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle>
+				<uxap:actions>
+					<ToggleButton text="Edit" type="Emphasized"/>
+					<Button text="Delete" type="Transparent"/>
+					<Button text="Copy" type="Transparent"/>
+					<Button icon="sap-icon://action" type="Transparent"/>
+				</uxap:actions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:headerContent>
+			<FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+				<f:Avatar displaySize="L" displayShape="Square" class="sapUiTinyMarginEnd">
+				</f:Avatar>
+				<VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<Label text="Main Category"/>
+				</VBox>
+				<VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<Label text="Subcategory"/>
+				</VBox>
+				<VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<Label text="Price"/>
+				</VBox>
+			</FlexBox>
+		</uxap:headerContent>
+
+		<uxap:sections>
+			<uxap:ObjectPageSection title="General Information">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<form:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
+								<form:content>
+									<Label text="Product ID"/>
+									<Input id="note" value="{bankTransfer>amount}" />
+
+									<Label text="Description"/>
+									<Label text="Supplier"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

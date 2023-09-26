@@ -6,7 +6,8 @@ import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import Router from "sap/ui/core/routing/Router";
 import History from "sap/ui/core/routing/History";
-
+import JSONModel from "sap/ui/model/json/JSONModel";
+type propertyType = number | string | Date;
 /**
  * @namespace com.tutorial.banktransfer.controller
  */
@@ -60,6 +61,34 @@ export default abstract class BaseController extends Controller {
 		return this;
 	}
 
+	/**
+	 * set the view model data
+	 * @param { string } oModelName the model name
+	 * @param jsonData the new data
+	 */
+	public setDataModel(oModelName: string, jsonData: object) {
+		(this.getModel(oModelName) as JSONModel).setData(jsonData);
+	}
+	/**
+	 * get the view model data
+	 * @param {string} oModelName the model name
+	 */
+	public getDataModel<T = unknown>(oModelName: string): T {
+		return (this.getModel(oModelName) as JSONModel).getData() as T;
+	}
+	/**
+	 * get the view model data
+	 * @param {string} oModelName the model name
+	 * @param {string} property the propery name of model
+	 * @param {propertyType} value the propery name of model
+	 */
+	public setProperty(
+		oModelName: string,
+		property: string,
+		value: propertyType
+	): void {
+		(this.getModel(oModelName) as JSONModel).setProperty(property, value);
+	}
 	/**
 	 * Convenience method for triggering the navigation to a specific target.
 	 * @public

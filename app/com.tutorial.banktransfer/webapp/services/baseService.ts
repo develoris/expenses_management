@@ -1,5 +1,4 @@
 import Filter from "sap/ui/model/Filter";
-// import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import ODataModelV4 from "sap/ui/model/odata/v4/ODataModel";
 
@@ -32,16 +31,46 @@ export default class BaseService {
 			(entityContext) => entityContext.getObject() as T
 		);
 	}
-	public async getEntityById<T = unknown>(id: number): Promise<T> {
+	public async getEntityById<T = unknown, D = string | number>(
+		id: D
+	): Promise<T> {
 		const entityBinding = this.model.getKeepAliveContext(
-			`${this.modelBindList}(${id})`
+			`${this.modelBindList}(${id as string | number})`
 		);
-		return (await entityBinding.requestObject()) as T;
+		const o = (await entityBinding.requestObject()) as T;
+		return o;
+		// return (await entityBinding.requestObject()) as T;
 	}
 	public async create<T = unknown>(newObj: T): Promise<T> {
 		const entityContext = this.entityBindList.create(newObj);
 		(await entityContext.created()) as T;
 		return entityContext.getObject() as T;
+	}
+
+	public async modifyEntity<T = unknown, D = string | number>(
+		id: D,
+		obj: T,
+		fileds: string[]
+	) {
+		try {
+			const entityContextByID = this.model.getKeepAliveContext(
+				`${this.modelBindList}(${id as string})`
+			);
+
+			for (const field of fileds) {
+				await entityContextByID.setProperty(
+					entityContextByID.getPath() + `/${field}`,
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+					(obj as any)[field]
+				);
+			}
+			const entityModelByID = entityContextByID.getModel() as ODataModelV4;
+			const groupId = entityModelByID.getGroupId() as unknown as string;
+
+			await entityModelByID.submitBatch(groupId);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	public async deleteByID<T = string | number>(id: T): Promise<void> {
