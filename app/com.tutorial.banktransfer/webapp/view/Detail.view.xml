@@ -46,7 +46,7 @@
 							<form:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1">
 								<form:content>
 									<Label text="Product ID"/>
-									<Input id="note" value="{bankTransfer>amount}" />
+									<Input id="note" value="{bankTransfer>/note}" />
 
 									<Label text="Description"/>
 									<Label text="Supplier"/>
