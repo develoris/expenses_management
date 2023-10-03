@@ -10,8 +10,17 @@ import DateFormat from "sap/ui/core/format/DateFormat";
 import Event from "sap/ui/base/Event";
 import TableRow from "sap/ui/webc/main/TableRow";
 import Row from "sap/ui/table/Row";
-import BankTransferService from "../services/bankTransfer";
+import BankTransferService from "../services/BankTransfer.service";
 import Model from "sap/ui/model/Model";
+import {
+	UploadCollection$ChangeEvent,
+	UploadCollection$UploadCompleteEvent,
+} from "sap/m/UploadCollection";
+import MessageToast from "sap/m/MessageToast";
+import FileUploader from "sap/ui/unified/FileUploader";
+import ODataModel from "sap/ui/model/odata/v2/ODataModel";
+import MessageBox from "sap/m/MessageBox";
+import bankTransferMediaService from "../services/BankTransfermedia.service";
 
 /**
  * @namespace com.tutorial.banktransfer.controller
@@ -21,8 +30,14 @@ export default class Main extends BaseController {
 	oNewBankTransferDialog: Dialog;
 	_pNewBankTransfer: Promise<Control | Control[]>;
 	_oDataBankTransfer: BankTransferService;
+	_oDataBankTransferMedia: bankTransferMediaService;
+	_file: Blob;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	_fileContent: string | ArrayBuffer | null;
 	async onInit(): Promise<void> {
 		this._oDataBankTransfer = this.getOwnerComponent().services.bankTransfer;
+		this._oDataBankTransferMedia =
+			this.getOwnerComponent().services.bankTransferMedia;
 		this.initModel();
 		await this.getBankTransfer();
 	}
@@ -142,16 +157,113 @@ export default class Main extends BaseController {
 	}
 
 	onNavIndicatorsToggle(oEvent: Event) {
-		alert("nav");
 		const otableRow = oEvent.getParameter("row" as never) as TableRow;
 		const sPath = otableRow.getBindingContext("bankTransferList").getPath();
 		const selectedObjRow = otableRow
 			.getBindingContext("bankTransferList")
 			.getModel()
 			.getObject(sPath) as BankTransfer;
-		console.log(selectedObjRow);
 		this.getRouter().navTo("detail", {
 			id: selectedObjRow.ID,
+		});
+	}
+	handleUploadComplete(oEvent: UploadCollection$UploadCompleteEvent) {
+		const sResponse = oEvent.getParameter("response"),
+			iHttpStatusCode = parseInt(/\d{3}/.exec(sResponse)[0]);
+		let sMessage: string;
+
+		if (sResponse) {
+			sMessage =
+				iHttpStatusCode === 200
+					? sResponse + " (Upload Success)"
+					: sResponse + " (Upload Error)";
+			MessageToast.show(sMessage);
+		}
+	}
+
+	handleUploadPress() {
+		const oFileUploader = this.byId("fileUploader") as FileUploader;
+		this._oDataBankTransfer.setMedia(
+			oFileUploader,
+			"85726248-cd9f-43d0-8e27-bb9aee9d5290",
+			"image",
+			"/expensesmanagement/"
+		);
+		console.log("ok");
+		// oFileUploader
+		// 	.checkFileReadable()
+		// 	.then(
+		// 		function () {
+		// 			oFileUploader.upload();
+		// 		},
+		// 		function (error) {
+		// 			MessageToast.show("The file cannot be read. It may have changed.");
+		// 		}
+		// 	)
+		// 	.then(function () {
+		// 		oFileUploader.clear();
+		// 	})
+		// 	.catch((e) => {
+		// 		console.log(e);
+		// 	});
+
+		/**
+		 * on File Change
+		 */
+	}
+	onFileChange(oEvent: UploadCollection$ChangeEvent) {
+		console.log(oEvent.getMetadata());
+		const file = oEvent.getParameters().files[0];
+		console.log(file);
+		// const file = oEvent.getParameters("files").files[0];
+		this._file = file as Blob;
+	}
+	/**
+	 * On File Upload
+	 */
+	onUploadFile() {
+		const that = this;
+		const oUploadSet = this.byId("__fileUploader");
+		//Upload image
+		const reader = new FileReader();
+		reader.onload = async function () {
+			// oEvent.currentTarget.
+			// get an access to the content of the file
+
+			that._fileContent = reader.result;
+			// that.createfile();
+			const oImageData = {
+				content: that._fileContent as unknown,
+				mediaType: that._file.type,
+				fileName: (that._file as unknown as { name: string }).name,
+			};
+			await that._oDataBankTransferMedia.create(oImageData);
+		}.bind(this);
+		reader.readAsDataURL(that._file);
+	}
+	/**
+	 *  Create Operation to create an entry in CAP
+	 */
+	createfile() {
+		// this._fileContent.valueOf();
+		// const that = this;
+		// Data for CAP to create entry
+		const oImageData = {
+			content: this._fileContent as unknown,
+			mediaType: this._file.type,
+			fileName: (this._file as unknown as { name: string }).name,
+		};
+		const oCAPModel = this.getOwnerComponent().getModel() as ODataModel;
+		const sURL = "/banktransfermedia";
+		//Create call for CAP OData Service
+		oCAPModel.create(sURL, oImageData, {
+			success: function (oData: { id: number | string }) {
+				const id = oData.id;
+				const sMsg = "File Uploaded Successfully for ID: " + id;
+				MessageBox.success(sMsg);
+			},
+			// error: function (jqXHR, textStatus) {},
+			// error: function (jqXHR, textStatus) {},
 		});
 	}
 }

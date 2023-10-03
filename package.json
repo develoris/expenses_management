@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^6",
+    "@sap/cds": "^7.2.1",
     "express": "^4"
   },
   "devDependencies": {
@@ -28,25 +28,25 @@
     "watch:ui:nodemon": "npm --prefix ./app/com.tutorial.banktransfer/ run watch:build:nodemon",
     "watch:srv:babel": "nodemon --config nodemon-srv.json --exec \" npm run start \"",
     "watch:ui:babel": "npm --prefix ./app/com.tutorial.banktransfer/ run watch:build:babel",
-    "watch:all":"npm-run-all --parallel watch:srv:nodemon watch:ui:nodemon",
-    "watch:all-babel":"npm-run-all --parallel watch:srv:babel watch:ui:babel"
+    "watch:all": "npm-run-all --parallel watch:srv:nodemon watch:ui:nodemon",
+    "watch:all-babel": "npm-run-all --parallel watch:srv:babel watch:ui:babel"
   },
   "cds": {
     "requires": {
-        "db": {
-            "kind": "sql"
-        }
+      "db": {
+        "kind": "sql"
+      }
     },
     "[hybrid]": {
-        "db": {
-            "kind": "hana-cloud"
-        }
+      "db": {
+        "kind": "hana-cloud"
+      }
     },
     "[production]": {
-        "auth": "xsuaa",
-        "db": {
-            "kind": "hana-cloud"
-        }
+      "auth": "xsuaa",
+      "db": {
+        "kind": "hana-cloud"
+      }
     }
-}
+  }
 }

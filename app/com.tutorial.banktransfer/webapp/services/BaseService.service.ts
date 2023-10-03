@@ -1,6 +1,8 @@
 import Filter from "sap/ui/model/Filter";
 import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
 import ODataModelV4 from "sap/ui/model/odata/v4/ODataModel";
+import FileUploader from "sap/ui/unified/FileUploader";
+import FileUploaderHttpRequestMethod from "sap/ui/unified/FileUploaderHttpRequestMethod";
 
 export default class BaseService {
 	private modelBindList: string;
@@ -39,7 +41,6 @@ export default class BaseService {
 		);
 		const o = (await entityBinding.requestObject()) as T;
 		return o;
-		// return (await entityBinding.requestObject()) as T;
 	}
 	public async create<T = unknown>(newObj: T): Promise<T> {
 		const entityContext = this.entityBindList.create(newObj);
@@ -58,6 +59,8 @@ export default class BaseService {
 			);
 
 			for (const field of fileds) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+				console.log((obj as any)[field]);
 				await entityContextByID.setProperty(
 					entityContextByID.getPath() + `/${field}`,
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
@@ -78,5 +81,26 @@ export default class BaseService {
 			`${this.modelBindList}(${id as string | number})`
 		);
 		await entityBinding.delete();
+	}
+
+	public setMedia(
+		mediaUpload: FileUploader,
+		entityID: string,
+		mediaField: string,
+		sPath: string
+	) {
+		mediaUpload.removeAllHeaderParameters();
+		mediaUpload.removeAllParameters();
+		const entityBinding = this.model.getKeepAliveContext(
+			`${this.modelBindList}(${entityID as string | number})`
+		);
+		const uploadUrl =
+			sPath +
+			`${entityBinding
+				.getPath()
+				.replace("/", "")}/image(fileName=${mediaUpload.getValue()})/$value`;
+		mediaUpload.setHttpRequestMethod(FileUploaderHttpRequestMethod.Put);
+		mediaUpload.setUploadUrl(uploadUrl);
+		mediaUpload.upload();
 	}
 }

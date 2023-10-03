@@ -1,0 +1,31 @@
+
+@protocol = http
+@host = localhost
+@port = 4004
+### Read Pictures
+GET {{protocol}}://{{host}}:{{port}}/odata/v4/shipment-bay-managment/QRCodes
+Authorization: Basic admin:
+
+### Create Picture with mediatype
+POST {{protocol}}://{{host}}:{{port}}/odata/v4/shipment-bay-managment/QRCodes
+Accept: application/json
+Content-Type: application/json
+
+{
+   "mediaType": "image/png" ,
+  "fileName": "frame.png"
+}
+
+### Upload Binary PNG
+PUT {{protocol}}://{{host}}:{{port}}/odata/v4/shipment-bay-managment/QRCodes(c705b0b5-b916-4165-b871-f83ab070bab1)/content
+Content-Type: image/png
+
+< frame.png
+
+### Read Binary
+GET {{protocol}}://{{host}}:{{port}}/odata/v4/shipment-bay-managment/QRCodes(c705b0b5-b916-4165-b871-f83ab070bab1)/content
+Authorization: Basic admin:
+
+### Delete Image
+DELETE {{protocol}}://{{host}}:{{port}}/media-server/Media(1)
+Authorization: Basic admin:

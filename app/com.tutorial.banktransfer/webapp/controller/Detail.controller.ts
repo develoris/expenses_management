@@ -1,6 +1,6 @@
 import { Route$MatchedEvent } from "sap/ui/core/routing/Route";
 import BaseController from "./BaseController";
-import BankTransferService from "../services/bankTransfer";
+import BankTransferService from "../services/BankTransfer.service";
 import { BankTransfer } from "../model/types";
 import JSONModel from "sap/ui/model/json/JSONModel";
 

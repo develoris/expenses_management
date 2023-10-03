@@ -12,7 +12,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				 "uri": "/expensesmanagement/",
+				 "uri": "/odata/v4/expensesmanagement/",
 				 "type": "OData",
 				 "settings": {
 						"annotations": [],
