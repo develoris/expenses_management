@@ -27,9 +27,7 @@
 					}" change="handleChange" required="true" class="sapUiSmallMarginBottom" valueState="{modifybankTransfer>/_state/period/valueState}" valueStateText="{modifybankTransfer>/_state/period/valueStateText}"/>
 				<Label text="Note" labelFor="note"/>
 				<Input id="note" value="{modifybankTransfer>/note}" required="true" valueState="{modifybankTransfer>/_state/note/valueState}" valueStateText="{modifybankTransfer>/_state/note/valueStateText}" />
-				<!-- <Label text="fileUploader" labelFor="fileUploader"/>
-				<u:FileUploader id="fileUploader" useMultipart="false" uploadUrl="http://localhost:4004/expensesmanagement/banktransfer/image" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete"/>
-				<Button text="Upload File" press="handleUploadPress"/> -->
+
 				<Label text="Attach File" labelFor="fileUploader" required="true"/>
 				<u:FileUploader id="__fileUploader" tooltip="Upload your file to DB" change="onFileChange"/>
 				<Button text="Upload" press="onUploadFile" type="Emphasized"/>

@@ -167,50 +167,7 @@ export default class Main extends BaseController {
 			id: selectedObjRow.ID,
 		});
 	}
-	handleUploadComplete(oEvent: UploadCollection$UploadCompleteEvent) {
-		const sResponse = oEvent.getParameter("response"),
-			iHttpStatusCode = parseInt(/\d{3}/.exec(sResponse)[0]);
-		let sMessage: string;
 
-		if (sResponse) {
-			sMessage =
-				iHttpStatusCode === 200
-					? sResponse + " (Upload Success)"
-					: sResponse + " (Upload Error)";
-			MessageToast.show(sMessage);
-		}
-	}
-
-	handleUploadPress() {
-		const oFileUploader = this.byId("fileUploader") as FileUploader;
-		this._oDataBankTransfer.setMedia(
-			oFileUploader,
-			"85726248-cd9f-43d0-8e27-bb9aee9d5290",
-			"image",
-			"/expensesmanagement/"
-		);
-		console.log("ok");
-		// oFileUploader
-		// 	.checkFileReadable()
-		// 	.then(
-		// 		function () {
-		// 			oFileUploader.upload();
-		// 		},
-		// 		function (error) {
-		// 			MessageToast.show("The file cannot be read. It may have changed.");
-		// 		}
-		// 	)
-		// 	.then(function () {
-		// 		oFileUploader.clear();
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
-
-		/**
-		 * on File Change
-		 */
-	}
 	onFileChange(oEvent: UploadCollection$ChangeEvent) {
 		console.log(oEvent.getMetadata());
 		const file = oEvent.getParameters().files[0];
