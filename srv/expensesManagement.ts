@@ -2,11 +2,16 @@ import cds from "@sap/cds";
 import { Service } from "@sap/cds/apis/services";
 
 export default (expensesManagement: Service) => {
+  console.log("ciao");
   const em = expensesManagement;
   const { banktransferMedia } = em.entities("expensesManagement");
   em.after("GET", "banktransfer", () => {
     console.log(banktransferMedia);
     return;
+  });
+
+  em.on(["CREATE", "POST"], "banktransfermedia", () => {
+    console.log("create image");
   });
 
   /**

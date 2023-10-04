@@ -8,6 +8,11 @@ export default class BaseService {
 	private modelBindList: string;
 	private model: ODataModelV4;
 	private entityBindList: ODataListBinding;
+	/**
+	 *
+	 * @param {ODataModelV4} model
+	 * @param {string} modelBindList entity path to bind
+	 */
 	constructor(model: ODataModelV4, modelBindList: string) {
 		this.modelBindList = modelBindList;
 		this.model = model;
@@ -15,6 +20,9 @@ export default class BaseService {
 			$$getKeepAliveContext: true,
 		});
 	}
+	/**
+	 * @return {Promise<T>} array of entity
+	 */
 	public async getList<T = unknown>(): Promise<T[]> {
 		const entityContexts = await this.entityBindList.requestContexts();
 		return entityContexts.map(
@@ -22,6 +30,10 @@ export default class BaseService {
 		);
 	}
 
+	/**
+	 * @param {Array<Filter>} filters oData filter
+	 * @return {Promise<T[]>} array of entity filtered
+	 */
 	public async getListWithFilter<T = unknown>(
 		filters: Array<Filter>
 	): Promise<T[]> {
@@ -33,6 +45,12 @@ export default class BaseService {
 			(entityContext) => entityContext.getObject() as T
 		);
 	}
+
+	/**
+	 *
+	 * @param {string | number } id the id of entity
+	 * @returns
+	 */
 	public async getEntityById<T = unknown, D = string | number>(
 		id: D
 	): Promise<T> {

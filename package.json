@@ -23,6 +23,7 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "start:ts": "cds-ts serve",
     "watch:srv": "cds-ts watch",
     "watch:srv:nodemon": "nodemon --config nodemon-srv.json --exec \" npm run start \"",
     "watch:ui:nodemon": "npm --prefix ./app/com.tutorial.banktransfer/ run watch:build:nodemon",
