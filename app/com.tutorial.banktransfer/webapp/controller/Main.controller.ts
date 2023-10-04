@@ -33,7 +33,7 @@ export default class Main extends BaseController {
 	_oDataBankTransferMedia: bankTransferMediaService;
 	_file: Blob;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	_fileContent: string | ArrayBuffer | null;
+	_fileContent: string | ArrayBuffer | null | Blob;
 	async onInit(): Promise<void> {
 		this._oDataBankTransfer = this.getOwnerComponent().services.bankTransfer;
 		this._oDataBankTransferMedia =
@@ -188,13 +188,12 @@ export default class Main extends BaseController {
 			// get an access to the content of the file
 
 			that._fileContent = reader.result;
+			const base64Response = await fetch(that._fileContent as RequestInfo);
+			const blob = await base64Response.blob();
+			that._fileContent = blob;
 			// that.createfile();
-			const oImageData = {
-				content: that._fileContent as unknown,
-				mediaType: that._file.type,
-				fileName: (that._file as unknown as { name: string }).name,
-			};
-			await that._oDataBankTransferMedia.create(oImageData);
+
+			await that._oDataBankTransferMedia.create(blob);
 		}.bind(this);
 		reader.readAsDataURL(that._file);
 	}

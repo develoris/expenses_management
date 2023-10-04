@@ -5,9 +5,9 @@ import FileUploader from "sap/ui/unified/FileUploader";
 import FileUploaderHttpRequestMethod from "sap/ui/unified/FileUploaderHttpRequestMethod";
 
 export default class BaseService {
-	private modelBindList: string;
-	private model: ODataModelV4;
-	private entityBindList: ODataListBinding;
+	protected modelBindList: string;
+	protected model: ODataModelV4;
+	protected entityBindList: ODataListBinding;
 	/**
 	 *
 	 * @param {ODataModelV4} model
